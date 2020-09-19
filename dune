@@ -1,0 +1,3 @@
+(executable
+ (name main)
+ (libraries kv etcd core_kernel.binary_packing lwt lwt.unix httpaf httpaf-lwt-unix))

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="7 186 716 224" width="716" height="224">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica Neue" font-size="12" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-9 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M -8 0 L 0 3 L 0 -3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <font-face font-family="Helvetica Neue" font-size="10" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.17.5\n2020-09-21 01:13:25 +0000</metadata>
+  <g id="Canvas_1" fill="none" stroke-opacity="1" fill-opacity="1" stroke-dasharray="none" stroke="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="7" y="186" width="716" height="224"/>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <rect x="296.5" y="267.08807" width="124.5" height="61.82386" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(301.5 281.608)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="12.074" y="15">gRPC server</tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="#707070" x="38.686" y="29.447998">OCaml</tspan>
+        </text>
+      </g>
+      <g id="Graphic_6">
+        <rect x="481.835" y="268.5329" width="87.4" height="58.75979" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(486.835 281.52078)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="16.772" y="15">Envoy</tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="#707070" x="21.588" y="29.447998">bridge</tspan>
+        </text>
+      </g>
+      <g id="Line_7">
+        <path d="M 430.8965 297.33285 C 449.0616 297.19308 462.35446 297.1227 471.9375 297.10132" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_8">
+        <text transform="translate(431.225 304.5)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="black" x="0" y="10">HTTP/1.1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_12">
+        <rect x="630.07" y="266.65052" width="91.5" height="62.499756" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(635.07 281.5084)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.894" y="15">etcd</tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="#707070" x="20.53" y="29.447998">storage</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <text transform="translate(582.0675 304.7636)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="black" x=".5" y="10">HTTP/2</tspan>
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="black" x="0" y="22.28">+ gRPC</tspan>
+        </text>
+      </g>
+      <g id="Line_14">
+        <path d="M 579.13716 297.65184 C 596.50494 297.5749 609.92374 297.5254 620.1712 297.497" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_15">
+        <rect x="8.4" y="268.5765" width="91.5" height="58.847" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(13.4 281.608)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="20.158" y="15">Client</tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="#707070" x="21.862" y="29.447998">grpcurl</tspan>
+        </text>
+      </g>
+      <g id="Graphic_17">
+        <rect x="154" y="268.5329" width="87.4" height="58.75979" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(159 281.52078)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="16.772" y="15">Envoy</tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="#707070" x=".36600076" y="29.447998">reverse bridge</tspan>
+        </text>
+      </g>
+      <g id="Line_19">
+        <path d="M 109.80022 297.4715 C 125.67485 297.3525 136.63823 297.31097 144.09795 297.31798" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_20">
+        <path d="M 251.29814 298.5471 C 269.20153 298.65298 280.0537 298.5634 286.6135 298.4256" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_21">
+        <text transform="translate(248.57 305.7636)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="black" x="0" y="10">HTTP/1.1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_22">
+        <text transform="translate(109.415 303.7398)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="black" x=".5" y="10">HTTP/2</tspan>
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="black" x="0" y="22.28">+ gRPC</tspan>
+        </text>
+      </g>
+      <g id="Graphic_24">
+        <rect x="296.5" y="187" width="124.5" height="61.82386" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(301.5 201.51993)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="12.074" y="15">gRPC server</tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="#707070" x="38.686" y="29.447998">OCaml</tspan>
+        </text>
+      </g>
+      <g id="Graphic_25">
+        <rect x="296.5" y="347.17614" width="124.5" height="61.82386" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(301.5 361.69607)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="12.074" y="15">gRPC server</tspan>
+          <tspan font-family="Helvetica Neue" font-size="12" font-weight="400" fill="#707070" x="38.686" y="29.447998">OCaml</tspan>
+        </text>
+      </g>
+      <g id="Line_26">
+        <path d="M 245.38903 262.94214 C 266.69383 248.6499 279.3428 242.6497 286.78736 240.88192" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_27">
+        <path d="M 247.76815 332.76463 C 266.79926 345.2108 279.09653 351.95567 286.9146 355.17904" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_29">
+        <path d="M 429.9345 251.7915 C 452.42167 262.52695 465.47017 268.805 472.95234 272.43962" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_30">
+        <path d="M 430.02797 346.6964 C 450.9885 337.2423 464.52104 330.8357 473.0793 326.52864" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

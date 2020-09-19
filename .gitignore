@@ -1,0 +1,5 @@
+.DS_Store
+.merlin
+.ocamlformat
+*.graffle
+/_build

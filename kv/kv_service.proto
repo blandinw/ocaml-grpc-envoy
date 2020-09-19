@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package kv;
+
+import "kv.proto";
+
+service KV {
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc Set(SetRequest) returns (SetResponse);
+}
