@@ -1,6 +1,10 @@
-open Httpaf
+open H2
 open Lwt.Infix
 open Lwt_io
+module Flags = H2__.Flags
+module Priority = H2__.Priority
+module Serialize = H2__.Serialize
+module Writer = H2__.Serialize.Writer
 
 let envoy_host = "localhost"
 
@@ -10,15 +14,23 @@ let envoy_port = "9911"
 
 exception Rpc_failure of string
 
-let perform_request path proto =
+let make_grpc_payload proto =
   let proto_len = String.length proto in
-  (* account for null byte + uint32 *)
   let payload = Bytes.create @@ (proto_len + 1 + 4) in
+
+  (* write compressed flag (uint8) *)
   Bytes.set payload 0 '\x00';
+
+  (* write msg length (uint32 be) *)
   Binary_packing.pack_unsigned_32_int_big_endian ~buf:payload ~pos:1
     (String.length proto);
+
+  (* write protobuf msg *)
   Bytes.blit_string proto 0 payload 5 proto_len;
-  let payload_str = Bytes.to_string payload in
+  Bytes.to_string payload
+
+let perform_request path proto =
+  let payload_str = make_grpc_payload proto in
   let payload_len = String.length payload_str in
 
   Lwt_unix.getaddrinfo envoy_host envoy_port [ Unix.(AI_FAMILY PF_INET) ]
@@ -32,6 +44,11 @@ let perform_request path proto =
       | `Malformed_response err ->
           Rpc_failure (Format.sprintf "Malformed response: %s" err)
       | `Invalid_response_body_length _ -> Rpc_failure "Invalid body length"
+      | `Protocol_error (err_code, err) ->
+          Rpc_failure
+            (Format.sprintf "Protocol error: %s %s"
+               (Error_code.to_string err_code)
+               err)
       | `Exn exn -> exn
     in
     Lwt.wakeup_later_exn notify_finished ret
@@ -47,6 +64,7 @@ let perform_request path proto =
           read := !read + len;
           Body.schedule_read rsp_body ~on_read ~on_eof
         and on_eof () =
+          (* discard compressed flag (uint8) and msg length (uint32 be) *)
           Lwt.wakeup_later notify_finished (Bytes.sub rsp_proto 5 (!read - 5))
         in
         Body.schedule_read rsp_body ~on_read ~on_eof
@@ -64,9 +82,11 @@ let perform_request path proto =
         ("host", "etcd");
       ]
   in
+
+  H2_lwt_unix.Client.create_connection ~error_handler socket >>= fun conn ->
   let request_body =
-    Httpaf_lwt_unix.Client.request ~error_handler ~response_handler socket
-      (Request.create ~headers `POST ("/etcdserverpb.KV" ^ path))
+    H2_lwt_unix.Client.request ~error_handler ~response_handler conn
+      (Request.create ~scheme:"http" ~headers `POST ("/etcdserverpb.KV" ^ path))
   in
   Body.write_string request_body payload_str;
   Body.close_writer request_body;
@@ -143,7 +163,10 @@ let start_server port =
         read := !read + len;
         Body.schedule_read req_body ~on_read ~on_eof
       and on_eof () =
-        let decoder = Pbrt.Decoder.of_bytes (Bytes.sub req_proto 0 !read) in
+        let decoder =
+          (* discard compressed flag (uint8) and msg length (uint32 be) *)
+          Pbrt.Decoder.of_bytes (Bytes.sub req_proto 5 (!read - 5))
+        in
         let encoder = Pbrt.Encoder.create () in
 
         ignore
@@ -151,6 +174,8 @@ let start_server port =
              (fun _ ->
                f decoder encoder >|= fun () ->
                let rsp_str = Pbrt.Encoder.to_string encoder in
+               let rsp_payload = make_grpc_payload rsp_str in
+               let rsp_payload_len = String.length rsp_payload in
                let rsp_body =
                  Reqd.respond_with_streaming reqd
                    (Response.create
@@ -158,12 +183,36 @@ let start_server port =
                         (Headers.of_list
                            [
                              ("content-type", "application/grpc");
-                             ( "content-length",
-                               Int.to_string @@ String.length rsp_str );
+                             ("content-length", Int.to_string @@ rsp_payload_len);
                            ])
                       `OK)
                in
-               Body.write_string rsp_body rsp_str;
+
+               (* TODO(willy) use Reqd functions to write data/headers frames when available *)
+               let reqd_ = (Obj.magic reqd : H2__.Reqd.t) in
+
+               (* write DATA frame *)
+               let frame_info =
+                 Writer.make_frame_info ~max_frame_size:reqd_.max_frame_size
+                   ~flags:Flags.default_flags reqd_.id
+               in
+               Writer.write_data reqd_.writer frame_info rsp_payload;
+
+               (* write trailers *)
+               let frame_info =
+                 Writer.make_frame_info ~max_frame_size:reqd_.max_frame_size
+                   ~flags:Flags.(set_end_stream default_flags)
+                   reqd_.id
+               in
+               let faraday = Faraday.create 256 in
+               let hpack_encoder = Hpack.Encoder.create 256 in
+               Hpack.Encoder.encode_header hpack_encoder faraday
+                 { name = "grpc-status"; value = "0"; sensitive = false };
+               Writer.chunk_header_block_fragments reqd_.writer frame_info
+                 ~write_frame:
+                   (Serialize.write_headers_frame
+                      ~priority:Priority.default_priority)
+                 ~has_priority:false faraday;
                Body.close_writer rsp_body)
              (fun exn -> Lwt.return @@ Lwt.wakeup_later_exn notify_p exn)
       in
@@ -205,8 +254,7 @@ let start_server port =
          Body.close_writer response_body )
   in
   let connection_handler =
-    Httpaf_lwt_unix.Server.create_connection_handler ~request_handler
-      ~error_handler
+    H2_lwt_unix.Server.create_connection_handler ~request_handler ~error_handler
   in
   Lwt.async (fun () ->
       Lwt_io.establish_server_with_client_socket listen_address

@@ -1,3 +1,7 @@
+This is the HTTP/2 branch. Here, Envoy is not strictly required for gRPC requests, but still important in a production environment.
+
+---
+
 This project shows how to implement a gRPC server and a gRPC client using OCaml and [Envoy](https://www.envoyproxy.io/), a very useful proxy open-sourced by Lyft and now part of the [CNCF](https://www.cncf.io/).
 
 The idea is use Envoy to translate between HTTP/1.1 and HTTP/2 gRPC. Note that Envoy appears twice on the diagram, but it's actually the same process.
@@ -60,7 +64,7 @@ docker run --name etcd \
            --advertise-client-urls 'http://etcd.my-net:2379'
            
 # run our OCaml server
-opam install --yes dune core_kernel httpaf httpaf-lwt-unix lwt ocaml-protoc
+opam install --yes dune core_kernel h2 h2-lwt-unix lwt ocaml-protoc
 dune exec -- ./main.exe 9986
            
 # in another terminal, you can query our OCaml server via Envoy, which in turn will query etcd via Envoy
